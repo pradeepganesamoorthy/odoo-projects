@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="test_field_module" model="ir.ui.view">
+            <field name="name">test.new.fields.tree</field>
+            <field name="model">create.field</field>
+            <field name="arch" type="xml">
+                <tree string="Fields">
+                    <field name="sq_name"/>
+                   <field name="name"/>
+                    <field name="date"/>
+                    <field name="age"/>
+                    <field name="address"/>
+                    <field name="average_mark"/>
+                    <field name="gender"/>
+                    <field name="vehicle"/>
+                    <field name="file_for_import"/>
+                    <field name="active"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="test_field_module_form" model="ir.ui.view">
+            <field name="name">test.new.fields.form</field>
+            <field name="model">create.field</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_processing" type="object" string="Process" states="draft" class="oe_highlight"/>
+                        <button name="action_complete" type="object" string="Compeleted" states="processing" class="oe_highlight"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="completed,processing" class="oe_highlight"/>
+                        <button name="action_reset" type="object" string="Reset" states="cancel" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,processing,completed"/>
+                    </header>
+                    <sheet>
+
+                     <field name="image_small" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Image Name"/>
+                        <h1><field name="sq_name"/></h1>
+                        <h1><field name="name" placeholder="Image Name" required="True"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="age"/>
+                            <field name="address"/>
+                        </group>
+                    <group>
+                        <field name="average_mark"/>
+                        <field name="gender"/>
+                        <field name="vehicle"/>
+                        <field name="form_create_date"/>
+                    </group>
+                    <group>
+                        <field name="file_for_import"/>
+                        <field name="active"/>
+                        <field name ="departments" widget="many2many_tags"/>
+                        <field name="currency_id"/>
+                        </group>
+                    </group>
+                        <notebook>
+                            <page string="Lists">
+                                <group>
+                                 <div class="oe_inline">
+                                <field name="vehicle_list" widget="one2many_list" nolabel="1">
+                                    <tree name="tax_map_tree" string="Vehicle List" editable="bottom">
+                                        <field name="multi_name"/>
+                                        <field name="mobile_num"/>
+                                        <field name="email_id_line"/>
+                                        <field name="gst_amount"/>
+                                        <field name="price"/>
+                                    </tree>
+                                </field>
+                                 </div>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="subtotal_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="total_amount" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                     </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="fields_pivot" model="ir.ui.view">
+            <field name="name">create.field.pivot</field>
+            <field name="model">create.field</field>
+            <field name="arch" type="xml">
+                <pivot string="ORM Fields">
+                    <field name="name"/>
+                    <field name="age"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="fields_calendar" model="ir.ui.view">
+            <field name="name">create.field.calendar</field>
+            <field name="model">create.field</field>
+            <field name="arch" type="xml">
+                <calendar string="ORM calendar" date_start="form_create_date" mode="month" quick_add="True">
+                    <field name="average_mark"/>
+                    <field name="age"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="fields_graph" model="ir.ui.view">
+            <field name="name">create.field.graph</field>
+            <field name="model">create.field</field>
+            <field name="arch" type="xml">
+                <graph string="ORM graph" type="pie">
+                    <field name="average_mark"/>
+                    <field name="age"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="field_kanban">
+            <field name="name">create.field.kanban</field>
+            <field name="model">create.field</field>
+            <field name="arch" type="xml">
+                <kanban string="View">
+                    <field name="name"/>
+                    <field name="age"/>
+                    <field name="date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_field_excercise_kanban">
+<!--                                <t t-if="record.image">-->
+<!--                                    <div class="o_kanban_image_fill_left d-none d-md-block"-->
+<!--                                         t-attf-style="background-image:url('{kanban_image('create.field','image_small',record.id.raw_value)}')"/>-->
+<!--                                </t>-->
+<!--                                <t t-else="">-->
+<!--                                    <img class="o_kanban_image" alt="Avatar" t-att-src='_s + "/basic/static/img/logo_white.png"'/>-->
+<!--                                </t>-->
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('create.field', 'image_small', record.id.value)" class="img-responsive" style="width:100px;"/>
+                                </div>
+                                <div class="o_kanban_details">
+                                    <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                    <div class="o_kanban_tags_section"/>
+                                    <ul>
+                                        <li>Age : <field name="age"/></li>
+                                        <li>Date : <field name="date"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="customer_search_view" model="ir.ui.view">
+            <field name="name">create.field.search.view</field>
+            <field name="model">create.field</field>
+            <field name="arch" type="xml">
+                <search string="search view">
+                    <field name="name" string="Category Name" filter_domain="[('name','ilike',self)]"/>
+                    <filter name="name" string="Name" domain="[('name','ilike','kathir')]" />
+                    <group expand="0" string="Group By..">
+                        <filter name="name" string="Name" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="dep_field_module" model="ir.ui.view">
+            <field name="name">dep.fields.tree</field>
+            <field name="model">departments.name</field>
+            <field name="arch" type="xml">
+                <tree string="Departments">
+                   <field name="dep_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="department_field_module_form" model="ir.ui.view">
+            <field name="name">test.departments.fields.form</field>
+            <field name="model">departments.name</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="dep_name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="field_action">
+            <field name="name">Field View</field>
+            <field name="res_model">create.field</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form,pivot,calendar,graph</field>
+            <field name="search_view_id" ref="customer_search_view"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="dep_action">
+            <field name="name">Department View</field>
+            <field name="res_model">departments.name</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="field_seq_number" model="ir.sequence">
+           <field name="name">serial_sequencer</field>
+           <field name="code">create.field</field>
+           <field name="prefix">SS</field>
+           <field name="padding">5</field>
+            <field name="number_increment">1</field>
+         </record>
+
+<menuitem id="fields_view_id" name="Field View"/>
+<menuitem id="view_field" name="Fields" parent="fields_view_id" action="field_action"/>
+<menuitem id="dep_field" name="Departments" parent="fields_view_id" action="dep_action"/>
+
+
+        <record id="sale_order_form_view_inherited" model="ir.ui.view">
+            <field name="name">Sale Order Inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page/field/tree/field[@name='product_id']" position="after">
+                    <field name="mobile_id"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]" position="after">
+                        <page string="Mobile">
+                    </page>
+                </xpath>
+
+<!--                <field name="payment_term_id" position="after">-->
+<!--                    <field name="mobile_id"></field>-->
+<!--                </field>-->
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
